@@ -63,7 +63,7 @@ body {
 body.swamp-bg {
     background-color: #1a3a2a; 
     /* VERCEL FIX: Added ./ */
-    background-image: url('/public/images/Swamp-Pixel-Game-Backgrounds4.webp');
+    background-image: url('./images/Swamp-Pixel-Game-Backgrounds4.webp');
     background-size: 120%; 
     background-position: center;
     background-repeat: no-repeat;
@@ -78,7 +78,7 @@ body.swamp-bg {
     cursor: pointer;
     transition: transform 0.2s;
     /* VERCEL FIX: Added ./ */
-    background-image: url('/public/images/ToxicFrogGreenBrown_Idle.png');
+    background-image: url('./images/ToxicFrogGreenBrown_Idle.png');
     background-size: 1152px 144px; 
     image-rendering: pixelated; 
     filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5)); 
@@ -95,7 +95,7 @@ body.swamp-bg {
 body.meadow-bg { 
     background-color: #7bed9f; 
     /* VERCEL FIX: Added ./ and grass background */
-    background-image: url('/public/images/bunny-field-bg.png');
+    background-image: url('./images/bunny-field-bg.png'); 
     background-size: cover;
 }
 
@@ -104,65 +104,85 @@ body.meadow-bg {
 .diff-btn:hover { background-color: #f368e0; }
 
 /* Restored your awesome pixel art board! */
+body.swamp-bg {
+    background-color: #1a3a2a; 
+    background-image: url('images/Swamp-Pixel-Game-Backgrounds4.webp');
+    background-size: 120%; 
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.swamp-area { width: 100%; height: 60%; position: relative; margin-top: 20px; }
+
+.frog {
+    width: 144px;  
+    height: 144px;
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.2s;
+    background-image: url('images/ToxicFrogGreenBrown_Idle.png');
+    background-size: 1152px 144px; 
+    image-rendering: pixelated; 
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5)); 
+    animation: idleBounce 0.8s steps(8) infinite;
+}
+
+.frog:hover { transform: scale(1.2); }
+.frog.flip { transform: scaleX(-1); }
+.frog.flip:hover { transform: scaleX(-1) scale(1.2); }
+.frog.pop-out { animation: popOut 0.5s forwards; }
+.frog.flip.pop-out { animation: popOutFlip 0.5s forwards; }
+
+/* --- SCENE 3: BUNNY BURROW STYLES --- */
+body.meadow-bg { background-color: #7bed9f; background-image: none; }
+
+.difficulty-buttons { display: flex; gap: 20px; margin-top: 20px; }
+.diff-btn { background-color: #ff9ff3; color: #000; font-family: 'Press Start 2P', monospace; font-size: 0.8rem; padding: 15px; cursor: pointer; border: 4px solid #fff; }
+.diff-btn:hover { background-color: #f368e0; }
+
 .burrow-grid-3x3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr); 
-    grid-template-rows: repeat(3, 1fr); 
-    /* VERCEL FIX: Added ./ */
-   background-image: url('/public/images/holes-bg.jpg');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    
-    width: 450px;
-    height: 450px;
-    padding: 40px; 
-    box-sizing: border-box;
-    
-    border: 4px solid white;
-    border-radius: 10px;
+    gap: 20px; 
     margin-top: 10px;
-    box-shadow: 0px 10px 20px rgba(0,0,0,0.5);
 }
 
 .hole {
-    width: 80px;
-    height: 60px; 
-    margin: auto; 
-    background-color: transparent; 
-    border: none;
-    box-shadow: none;
+    width: 90px;
+    height: 90px;
+    background-color: #2f3542; 
     border-radius: 50%;
     position: relative;
     overflow: hidden; 
+    border: 5px solid #57606f;
+    box-shadow: inset 0 10px 10px rgba(0,0,0,0.8);
 }
 
 .bunny {
-    width: 100%;  
-    height: 100%;
+    width: 80px;  
+    height: 80px;
     position: absolute;
     bottom: -10px; 
-    left: 0; 
+    left: 5px; 
     cursor: pointer;
+    transition: transform 0.1s;
     user-select: none;
-    /* VERCEL FIX: Added ./ */
-    background-image: url('/public/images/bunny-sprite.png');
+    
+    background-image: url('images/bunny-sprite.png');
     background-size: 400% 100%; 
     background-position: 0% 0%; 
     background-repeat: no-repeat;
     image-rendering: pixelated;
-    transform: scale(1.6);
-    transform-origin: bottom center;
-    transition: transform 0.1s;
 }
 
-.bunny:active { transform: scale(1.4); }
+.bunny:active { transform: scale(0.9); }
 .bunny.bonked { background-position: 100% 0%; }
 
 /* --- SCENE 4: OWL WORDLE STYLES --- */
 body.night-forest-bg { 
     background-color: #192a56; 
     /* VERCEL FIX: Added ./ */
-    background-image: url('/public/images/magical-forest.jpg');
+    background-image: url('./images/magical-forest.jpg');
     background-size: cover; 
     background-position: bottom;
     background-repeat: no-repeat;
@@ -236,7 +256,7 @@ body.night-forest-bg {
 body.birthday-bg {
     background-color: #0c4355; 
     /* VERCEL FIX: Added ./ */
-   background-image: url('/public/images/ponyo-finale.jpg');
+    background-image: url('./images/ponyo-finale.jpg'); 
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat;
