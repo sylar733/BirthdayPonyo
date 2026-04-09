@@ -17,7 +17,7 @@ let isTyping = false;
 let index = 0;
 
 // ==========================================
-// --- SCENE 1: INTRO TYPING (FAST SKIP) ---
+// --- SCENE 1: INTRO TYPING (SLOW EFFECT) ---
 // ==========================================
 document.addEventListener('click', function startTyping(e) {
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') return;
@@ -25,8 +25,6 @@ document.addEventListener('click', function startTyping(e) {
     if (!isTyping && index === 0) {
         isTyping = true;
         clickPrompt.style.display = 'none';
-        
-        // This triggers the slow typing animation!
         typeWriter(); 
     }
 });
@@ -49,7 +47,6 @@ proceedBtn.addEventListener('click', function(event) {
     document.body.classList.add('swamp-bg'); 
 });
 
-
 // ==========================================
 // --- SCENE 2: THE SWAMP GAME ---
 // ==========================================
@@ -64,14 +61,12 @@ fakeFrogs.forEach(frog => {
         swampMessageBox.classList.remove('hidden');
         swampText.innerText = "*Ribbit!* I'm just a normal frog! Keep looking!";
         swampText.style.color = "#ff4757"; 
-        
         setTimeout(() => { swampMessageBox.classList.add('hidden'); }, 2000);
     });
 });
 
 realFrog.addEventListener('click', function() {
     fakeFrogs.forEach(f => f.classList.add('pop-out'));
-    
     realFrog.style.transition = "all 1s ease";
     realFrog.style.top = "30%";
     realFrog.style.left = "45%";
@@ -91,7 +86,6 @@ nextLevelBtn.addEventListener('click', () => {
     document.body.className = 'meadow-bg'; 
 });
 
-
 // ==========================================
 // --- SCENE 3: BUNNY BOOP GAME ---
 // ==========================================
@@ -110,27 +104,21 @@ const finishBtn = document.getElementById('finish-btn');
 function setDifficulty(level) {
     difficultyScreen.classList.add('hidden');
     bunnyGameArea.classList.remove('hidden');
-
     if (level === 'hard') popSpeed = 1000; 
     else if (level === 'normal') popSpeed = 3000; 
     else if (level === 'easy') popSpeed = 0; 
-
     setTimeout(popUpBunny, 1000);
 }
 window.setDifficulty = setDifficulty;
 
 function popUpBunny() {
     if (bunnyScore >= targetScore) return; 
-
     document.querySelectorAll('.bunny').forEach(b => b.classList.add('hidden'));
-
     const holes = document.querySelectorAll('.hole');
     const randomIdx = Math.floor(Math.random() * holes.length);
     const bunny = holes[randomIdx].querySelector('.bunny');
-    
     bunny.classList.remove('hidden');
     clearTimeout(bunnyTimer);
-
     if (popSpeed > 0) {
         bunnyTimer = setTimeout(() => {
             bunny.classList.add('hidden');
@@ -142,27 +130,20 @@ function popUpBunny() {
 document.querySelectorAll('.bunny').forEach(bunny => {
     bunny.addEventListener('click', function(event) {
         event.stopPropagation();
-        
         if (bunnyScore >= targetScore || this.classList.contains('bonked')) return;
-
         bunnyScore++;
-        scoreDisplay.innerText = `Score: ${bunnyScore} / ${targetScore}`;
+        scoreDisplay.innerText = `Score: ${bunnyScore} / 5`;
         clearTimeout(bunnyTimer);
-
         this.classList.add('bonked');
-
         setTimeout(() => {
             this.classList.add('hidden');
             this.classList.remove('bonked');
-
             if (bunnyScore === targetScore) {
                 setTimeout(() => {
                     bunnyGameArea.classList.add('hidden'); 
                     bunnyMessageBox.classList.remove('hidden');
-                    
                     bunnyText.innerText = "*Thump thump!* You are too fast! Here is the letter 'T'. The Wizard Owl is waiting for you next!";
                     bunnyText.style.color = "#ff9ff3";
-                    
                     setTimeout(() => finishBtn.classList.remove('hidden'), 1000);
                 }, 300);
             } else {
@@ -178,15 +159,12 @@ finishBtn.addEventListener('click', () => {
     document.body.className = 'night-forest-bg';
 });
 
-
 // ==========================================
 // --- SCENE 4: OWL WORDLE GAME ---
 // ==========================================
 const targetWord = "MAGIC"; 
-
 let currentAttempt = 0;
 const maxAttempts = 6;
-
 const wordleGrid = document.getElementById('wordle-grid');
 const wordleInput = document.getElementById('wordle-input');
 const wordleSubmit = document.getElementById('wordle-submit');
@@ -205,31 +183,21 @@ if (wordleGrid) {
 if (wordleSubmit) {
     wordleSubmit.addEventListener('click', () => {
         if (currentAttempt >= maxAttempts) return;
-
         let guess = wordleInput.value.toUpperCase();
-        
         if (guess.length !== 5) {
             owlDialogue.innerText = "Hoot! Your spell must be exactly 5 letters long!";
             owlDialogue.style.color = "#e74c3c"; 
             return;
         }
-
         for (let i = 0; i < 5; i++) {
             const box = document.getElementById(`box-${currentAttempt * 5 + i}`);
             box.innerText = guess[i];
-
-            if (guess[i] === targetWord[i]) {
-                box.classList.add('correct'); 
-            } else if (targetWord.includes(guess[i])) {
-                box.classList.add('present'); 
-            } else {
-                box.classList.add('absent');  
-            }
+            if (guess[i] === targetWord[i]) box.classList.add('correct'); 
+            else if (targetWord.includes(guess[i])) box.classList.add('present'); 
+            else box.classList.add('absent');  
         }
-
         currentAttempt++;
         wordleInput.value = ""; 
-
         if (guess === targetWord) {
             owlDialogue.innerText = "Hoot! You are truly magical! Here is the letter 'E'. You have completed the quest!";
             owlDialogue.style.color = "#2ecc71"; 
@@ -237,25 +205,15 @@ if (wordleSubmit) {
             wordleSubmit.disabled = true;
             finishBtnFinal.classList.remove('hidden');
         } else if (currentAttempt === maxAttempts) {
-            owlDialogue.innerText = "Hoot! You ran out of guesses! Let me use my time-turner to reset the board so you can try again.";
-            owlDialogue.style.color = "#f1c40f"; 
-            
+            owlDialogue.innerText = "Hoot! Resetting board...";
             setTimeout(() => {
                 currentAttempt = 0;
-                document.querySelectorAll('.wordle-box').forEach(b => {
-                    b.innerText = "";
-                    b.className = "wordle-box"; 
-                });
-                owlDialogue.innerText = "Try again! Guess the 5-letter magical word!";
-                owlDialogue.style.color = "#fff";
-            }, 4000);
-        } else {
-            owlDialogue.innerText = "Hmm, not quite! Keep trying!";
-            owlDialogue.style.color = "#fff";
+                document.querySelectorAll('.wordle-box').forEach(b => { b.innerText = ""; b.className = "wordle-box"; });
+                owlDialogue.innerText = "Try again!";
+            }, 3000);
         }
     });
 
-    // Transition to the Grand Finale!
     finishBtnFinal.addEventListener('click', () => {
         owlScene.classList.add('hidden');
         birthdayScene.classList.remove('hidden');
